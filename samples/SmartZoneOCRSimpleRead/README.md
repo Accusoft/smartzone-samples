@@ -1,18 +1,27 @@
 # SmartZoneOCRSimpleRead
 
 This sample program demonstrates the basics of SmartZone functionality in a simple command line format.
-Sample supports Microsoft Visual Studio and Microsoft Visual Studio Code.
+Sample supports Microsoft Dotnet commandline.
 
 ## Building the Sample
 
-To build this sample with Visual Studio 2017 or later, open the .sln file in the project directory, select a Solution Configuration (Debug or Release) and a Solution Platform (AnyCPU), then build with Build Solution located in the Build menu.
-To build this sample from the command line, make sure `msbuild.exe` is in your path. Navigate to the sample directory and run the command `msbuild -t:Restore;Rebuild SmartZoneOCRSimpleRead.sln`.
+From the sample directory run the command:
+
+```bash
+dotnet build SmartZoneOCRSimpleRead.csproj
+```
 
 ## Running the Sample
 
-When the sample is built, it produces a console application executable in the bin subdirectory. Run this application by double-clicking the application icon, or running it directly from Command Prompt (cmd.exe), PowerShell, or similar. Note that the working directory must be the same as the directory containing the sample executable in order to find the sample input image and the output directory. The input image(s) and output directory are specified relative to the location of the application in all of these samples.
+When the sample is built, it produces a console application executable in the bin subdirectory. The following command will run this sample.
 
-NOTE: SmartZone .NET runs in evaluation mode if started without a license and will periodically display a dialog that requires interaction before proceeding. If you would like to work with a full-featured evaluation of the product, please contact Accusoft at info@accusoft.com.
+```bash
+dotnet run --project SmartZoneOCRSimpleRead.csproj
+```
+
+### Note
+
+When running in evaluation mode, SmartZone will replace portions of recognition results with the text " [Accusoft Evaluation] " and asterisk "*" characters. This is an appropriate evaluation mode for applications that have no user interface.
 
 ## Important files
 

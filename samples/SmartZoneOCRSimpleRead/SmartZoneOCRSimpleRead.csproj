@@ -1,80 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FDB3F9EA-B0E2-46AE-B5D4-8F960CB76E8F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SmartZoneOCRSimpleRead</RootNamespace>
-    <AssemblyName>SmartZoneOCRSimpleRead</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>net6.0</TargetFramework>
+    <Authors>Accusoft Corporation</Authors>
+    <Company>Accusoft Corporation</Company>
+    <Product>SmartZone</Product>
+    <Copyright>Copyright 2021-2022 Accusoft Corporation</Copyright>
+    <Version>1.0.0.0</Version>
+    <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  
   <PropertyGroup>
-    <!--
-
-        Required OCR language resource files are copied to folder "$(OutDir)assets" after the
-        MSBuild Target "Build" completes. By default, this directory is expected to be adjacent
-        to the Accusoft.SmartZoneOCR.Net.dll assembly at runtime.
-
-        To change this location to a different directory:
-
-        1. Override the MSBuild property $(Accusoft_SmartZone_OCRDataPath) in your project.
-        2. Provide this new location to SmartZone OCR with its OCRDataPath property before
-           recognition is performed.
-
-        Uninstalling the Accusoft.SmartZone.Runtime.Win and Accusoft.SmartZone.Runtime.Asian.Win
-        packages does not delete resource files copied from building your application.
-
-        NOTE: To save disk space, all SmartZone OCR samples utilize an app.config file with
-        AppSetting "OCRDataPath" to refer to the same directory targeted here with
-        property $(Accusoft_SmartZone_OCRDataPath).
-
-        -->
-    <Accusoft_SmartZone_OCRDataPath>$(OutDir)</Accusoft_SmartZone_OCRDataPath>
+    <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+    <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
+    <PackageReference Include="Accusoft.SmartZoneOCR.Net" Version="7.*" />
+    <PackageReference Include="Accusoft.SmartZone.Runtime.Win" Version="7.*" Condition="'$(IsWindows)' == 'true'" />
+    <PackageReference Include="Accusoft.SmartZone.Runtime.Lin" Version="7.*" Condition="'$(IsLinux)' == 'true'" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Accusoft.SmartZoneOCR.Net">
-      <Version>6.*</Version>
-    </PackageReference>
-    <PackageReference Include="Accusoft.SmartZone.Runtime.Win">
-      <Version>6.*</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
