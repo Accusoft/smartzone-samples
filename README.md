@@ -12,7 +12,7 @@ When the solution is built, it produces one or more console application executab
 
 ## System Requirements
 
-For a list of the system and development software necessary to build and run these samples, please refer to the [SmartZone .NET Online Documentation](https://help.accusoft.com/SmartZone/v6.1/netframework/webframe.html#Overview.html).
+For a list of the system and development software necessary to build and run these samples, please refer to the [SmartZone .NET Online Documentation](https://help.accusoft.com/SmartZone/latest/dotnet/webframe.html#overview.html).
 
 ## __Improve character recognition with our powerful ICR and OCR SDK.__
 
@@ -44,7 +44,7 @@ Set confidence values for recognition results to determine when manual review is
 
 ## Extensive OCR Language Support
 
-Support for multiple Western and Eastern languages, including Central European, Cyrillic, Baltic, and Asian languages. [See all supported languages](https://help.accusoft.com/SmartZone/latest/netframework/webframe.html#Accusoft.SmartZoneOCR.Net~Accusoft.SmartZoneOCRSdk.Language.html).
+Support for multiple Western and Eastern languages, including Central European, Cyrillic, Baltic, and Asian languages. [See all supported languages](https://help.accusoft.com/SmartZone/latest/dotnet/webframe.html#Accusoft.SmartZoneOCR.Net~Accusoft.SmartZoneOCRSdk.Language.html).
 
 ## Zonal Field Recognition
 

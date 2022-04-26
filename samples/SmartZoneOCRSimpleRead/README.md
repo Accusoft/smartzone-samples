@@ -1,7 +1,7 @@
 # SmartZoneOCRSimpleRead
 
 This sample program demonstrates the basics of SmartZone functionality in a simple command line format.
-Sample supports Microsoft Dotnet commandline.
+Sample supports Microsoft dotnet command line.
 
 ## Building the Sample
 
@@ -30,7 +30,3 @@ Provided SmartZone source files demonstrate recognition engine parameters that m
 ### Main module required to load the image and print the results
 
 Program.cs
-
-### Context specific configuration parameters
-
-app.config
