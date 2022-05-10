@@ -1,7 +1,7 @@
 # SmartZoneOCRSimpleRead
 
 This sample program demonstrates the basics of SmartZone functionality in a simple command line format.
-Sample supports Microsoft dotnet command line.
+The sample supports Microsoft dotnet command line and Visual Studio Code.
 
 ## Building the Sample
 
@@ -18,6 +18,11 @@ When the sample is built, it produces a console application executable in the bi
 ```bash
 dotnet run --project SmartZoneOCRSimpleRead.csproj
 ```
+
+## Running the Sample in Visual Studio Code
+
+Use `File->Open Folder...` menu and select the top-level directory cloned from the github.
+Use Visual Studio Code `Run` and `Run and Debug` modes to work with the Sample.
 
 ### Note
 
