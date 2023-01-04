@@ -2,13 +2,9 @@
 
 These samples are intended to demonstrate how the various functions of SmartZone .NET can be used to perform tasks. These samples are designed to be lightweight, concise, and show how SmartZone can be integrated into any application to perform these imaging tasks.
 
-## How to Build these Samples
+## How to Build and Run these Samples
 
-All samples can be built using Microsoft Visual Studio 2017 or later. To build any individual sample, use Visual Studio to open the .sln file in the individual project directory. After opening the solution, select a Solution Configuration (Debug or Release) and a Solution Platform (x64 or x86). Last, build the complete solution with Build Solution located in the Build menu.
-
-## How to Run these Samples
-
-When the solution is built, it produces one or more console application executables in 'bin' subdirectories in the individual project directories. Run the sample application by double-clicking the application icon, or running it directly from Command Prompt (cmd.exe), PowerShell, or similar. Note that the working directory must be the same as the directory containing the sample executable in order to find the sample input image and the output directory. The input image(s) and output directory are specified relative to the location of the application in all of these samples.
+Instructions for building and running these samples can be found in the individual samples' `README.md` files.
 
 ## System Requirements
 

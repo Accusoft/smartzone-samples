@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2022-11-22
+
+### Added
+
+- The sample `SmartZoneOCRFontAttributes` has been added to demonstrate how to access information about a character's font style (bold, italic), font category details, and font size.
+
 ## 2022-04-21
 
 ### Added
