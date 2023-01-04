@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Accusoft Corporation")]
 [assembly: AssemblyProduct("SmartZone for .NET")]
-[assembly: AssemblyCopyright("Copyright 2022 Accusoft Corporation")]
+[assembly: AssemblyCopyright("Copyright 2022-2023 Accusoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

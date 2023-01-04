@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmartZoneOCRSimpleRead")]
+[assembly: AssemblyTitle("SmartZoneOCRAutoRotation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Accusoft Corporation")]
 [assembly: AssemblyProduct("SmartZone for .NET")]
-[assembly: AssemblyCopyright("Copyright 2022 Accusoft Corporation")]
+[assembly: AssemblyCopyright("Copyright 2022-2023 Accusoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
