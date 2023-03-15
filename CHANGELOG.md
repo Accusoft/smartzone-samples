@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2023-03-14
+
+### Changed
+
+- Package reference to System.Drawing.Common has been updated to 6.0.0. This requires the use of runtimeconfig.template.json to enable Unix support for System.Drawing.
+
 ## 2022-11-22
 
 ### Added
