@@ -5,7 +5,7 @@
     <Authors>Accusoft Corporation</Authors>
     <Company>Accusoft Corporation</Company>
     <Product>SmartZone</Product>
-    <Copyright>Copyright 2021-2022 Accusoft Corporation</Copyright>
+    <Copyright>Copyright 2021-2025 Accusoft Corporation</Copyright>
     <Version>1.0.0.0</Version>
     <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
   </PropertyGroup>
@@ -16,11 +16,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <RuntimeHostConfigurationOption Include="System.Drawing.EnableUnixSupport" Value="true" />
-    <PackageReference Include="Accusoft.SmartZoneOCR.Net" Version="7.*" />
-    <PackageReference Include="Accusoft.SmartZone.Runtime.Win" Version="7.*" Condition="'$(IsWindows)' == 'true'" />
-    <PackageReference Include="Accusoft.SmartZone.Runtime.Lin" Version="7.*" Condition="'$(IsLinux)' == 'true'" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="Accusoft.SmartZoneOCR.Net" Version="8.*" />
+    <PackageReference Include="Accusoft.SmartZone.Runtime.Win" Version="8.*" Condition="'$(IsWindows)' == 'true'" />
+    <PackageReference Include="Accusoft.SmartZone.Runtime.Lin" Version="8.*" Condition="'$(IsLinux)' == 'true'" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta3.22114.1" />
   </ItemGroup>

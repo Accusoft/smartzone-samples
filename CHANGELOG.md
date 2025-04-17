@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 2025-04-14
+
+### Changed
+
+- Replaced `System.Drawing` with `FileStream` as the method used to pass images to SmartZone.
+
 ## 2023-03-14
 
 ### Changed

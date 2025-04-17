@@ -1,13 +1,13 @@
 ﻿// Copyright Accusoft Corporation
 
 using System;
-using System.Configuration;
-using System.Drawing;
 using System.IO;
 using Accusoft.SmartZoneOCRSdk;
 using ImageGear.Processing;
 using ImageGear.Core;
 using ImageGear.Formats;
+using System.Reflection;
+using System.Management;
 
 namespace SmartZoneOCRAutoRotation
 {
@@ -26,12 +26,7 @@ namespace SmartZoneOCRAutoRotation
                 // instance.Licensing.SetSolutionKey(12345, 12345, 12345, 12345);
                 // instance.Licensing.SetOEMLicenseKey("AStringForOEMLicensingContactAccusoftSalesForMoreInformation...");
 
-                // It would be better to have Accusoft ImageGear license to prevent ImageGear watermark effecting SmartZone OCR result.
-                // ImGearLicense.SetSolutionName("Your Solution Name");
-                // ImGearLicense.SetSolutionKey(12345, 12345, 12345, 12345);
-                // ImGearLicense.SetOEMLicenseKey("AStringForOEMLicensingContactAccusoftSalesForMoreInformation...");
-
-                const string ocrImagePath = @"../../input/OCR/INV645694-180-SKEW.bmp";
+                string ocrImagePath = Path.Combine(GetProjectDir(), @"../../input/OCR/INV645694-180-SKEW.bmp");
                 string ocrResults;
 
                 ocrResults = UsingSmartZoneOnly(instance, ocrImagePath);
@@ -45,49 +40,47 @@ namespace SmartZoneOCRAutoRotation
             }
         }
 
+        public static string GetProjectDir()
+        {
+            var localDir = Assembly.GetExecutingAssembly().Location;
+            while(!localDir.EndsWith("SmartZoneOCRAutoRotation"))
+                localDir = Path.GetDirectoryName(localDir);
+            return localDir;
+        }
+
+        // Recognize field using SmartZone with default settings
         public static string UsingSmartZoneOnly(SmartZoneOCR instance, string imagePath)
         {
-            Bitmap bitmap = Image.FromFile(imagePath) as Bitmap;
-
             instance.Reader.CharacterSet = CharacterSet.AllCharacters;
             instance.Reader.CharacterSet.Language = Language.WesternEuropean;
 
-            instance.Reader.UseAutoRotate = true;
+            instance.Reader.UseAutoRotate = false;
 
-            instance.Reader.Area = new Rectangle(710, 2855, 690, 200);
-
-            TextBlockResult result = instance.Reader.AnalyzeField(bitmap);
-
-            return result.Text;
+            instance.Reader.Zone = new Zone(710, 2855, 690, 200);
+            using (Stream fs = File.Open(imagePath, FileMode.Open))
+            {
+                TextBlockResult result = instance.Reader.AnalyzeField(fs);
+                return result.Text;
+            }
         }
 
+        // Recognize field using SmartZone with auto orientation
         public static string AutoOrientationSmartZone(SmartZoneOCR instance, string imagePath)
         {
-            // Initialize common formats.
-            ImGearCommonFormats.Initialize();
-
-            ImGearPage imGearPage = null;
-
-            using (FileStream inputStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                imGearPage = ImGearFileFormats.LoadPage(inputStream);
-
-            // Used ImageGear Deskew() to have better OCR accuracy.
-            ImGearRasterProcessing.Deskew((ImGearRasterPage)imGearPage, 0.1, ImGearRotationModes.CLIP, null);
-
-            Bitmap bitmap = ImGearFileFormats.ExportPageToBitmap(imGearPage);
-
             instance.Reader.CharacterSet = CharacterSet.AllCharacters;
             instance.Reader.CharacterSet.Language = Language.WesternEuropean;
 
             instance.Reader.UseAutoRotate = true;
 
-            instance.Reader.Area = new Rectangle(710, 2855, 690, 200);
-
-            TextBlockResult result = instance.Reader.AnalyzeField(bitmap);
-
-            return result.Text;
+            instance.Reader.Zone = new Zone(710, 2855, 690, 200);
+            using (Stream fs = File.Open(imagePath, FileMode.Open))
+            {
+                TextBlockResult result = instance.Reader.AnalyzeField(fs);
+                return result.Text;
+            }
         }
 
+        // Use ImageGear for pre-processing
         public static string AutoOrientationImageGear(SmartZoneOCR instance, string imagePath)
         {
             // Initialize common formats.
@@ -101,24 +94,18 @@ namespace SmartZoneOCRAutoRotation
             // Used ImageGear Deskew() to have better OCR accuracy.
             ImGearRasterProcessing.Deskew((ImGearRasterPage)imGearPage, 0.1, ImGearRotationModes.CLIP, null);
 
-            Bitmap bitmap = ImGearFileFormats.ExportPageToBitmap(imGearPage);
+            Image image = new Image(imGearPage);
 
-            OCROrientationMode szOcrOrientationMode = instance.Reader.DetectOrient(bitmap);
-
+            OCROrientationMode szOcrOrientationMode = instance.Reader.DetectOrient(image);
             ImGearProcessing.Rotate(imGearPage, GetRotationalValue(szOcrOrientationMode));
-
-            // Save rotated image if it's required.
-            using (FileStream outputStream = new FileStream(@"../../input/OCR/INV645694-180-SKEW-IG.bmp", FileMode.Create))
-                ImGearFileFormats.SavePage(imGearPage, outputStream, ImGearSavingFormats.BMP_UNCOMP);
-
-            bitmap = ImGearFileFormats.ExportPageToBitmap(imGearPage);
 
             instance.Reader.CharacterSet = CharacterSet.AllCharacters;
             instance.Reader.CharacterSet.Language = Language.WesternEuropean;
 
-            instance.Reader.Area = new Rectangle(710, 2855, 690, 200);
+            instance.Reader.Zone = new Zone(710, 2855, 690, 200);
 
-            TextBlockResult result = instance.Reader.AnalyzeField(bitmap);
+            image = new Image(imGearPage);
+            TextBlockResult result = instance.Reader.AnalyzeField(image);
 
             return result.Text;
         }

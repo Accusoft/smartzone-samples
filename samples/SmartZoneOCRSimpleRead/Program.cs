@@ -1,9 +1,8 @@
 ﻿// Copyright Accusoft Corporation
 
 using System;
-using System.Configuration;
-using System.Drawing;
 using System.IO;
+using System.Reflection;
 using Accusoft.SmartZoneOCRSdk;
 
 namespace SmartZoneOCRSimpleRead
@@ -12,15 +11,21 @@ namespace SmartZoneOCRSimpleRead
     {
         public static void Main(string[] args)
         {
-            const string ocrImagePath = @"../../input/OCR/MultiLine.bmp";
-            using (Bitmap ocrImage = Image.FromFile(ocrImagePath) as Bitmap)
-            {
-                string ocrResults =  Process(ocrImage);
-                PrintResults(ocrImagePath, ocrResults, "OCR");
-            }
+            string ocrImagePath = Path.Combine(GetProjectDir(), @"../../input/OCR/MultiLine.bmp");
+            Image ocrImage = new Image(ocrImagePath);
+            string ocrResults =  Process(ocrImage);
+            PrintResults(ocrImagePath, ocrResults, "OCR");
         }
 
-        public static string Process(Bitmap bitmap)
+        public static string GetProjectDir()
+        {
+            var localDir = Assembly.GetExecutingAssembly().Location;
+            while (!localDir.EndsWith("SmartZoneOCRSimpleRead"))
+                localDir = Path.GetDirectoryName(localDir);
+            return localDir;
+        }
+
+        public static string Process(Image image)
         {
             using (SmartZoneOCR instance = new SmartZoneOCR())
             {
@@ -37,9 +42,9 @@ namespace SmartZoneOCRSimpleRead
                 instance.Reader.CharacterSet.Language = Language.WesternEuropean;
 
                 // Optional. Zonal recognition support. Can be changed to recognize specific parts of the image.
-                instance.Reader.Area = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                instance.Reader.Zone = new Zone(0, 0, image.Width, image.Height);
 
-                TextBlockResult result = instance.Reader.AnalyzeField(bitmap);
+                TextBlockResult result = instance.Reader.AnalyzeField(image);
                 return result.Text;
             }
         }

@@ -1,9 +1,8 @@
 ﻿// Copyright Accusoft Corporation
 
 using System;
-using System.Configuration;
-using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Accusoft.SmartZoneOCRSdk;
 
@@ -14,24 +13,31 @@ namespace SmartZoneOCRSimpleRead
         public static void Main(string[] args)
         {
 
-            const string ocrImagePath = @"../../input/OCR/couriernew_serif_bolditalic_monospace.bmp";
-            using (Bitmap ocrImage = Image.FromFile(ocrImagePath) as Bitmap)
-            {
-                TextBlockResult ocrResults = Process(ocrImage);
-                PrintResults(ocrImagePath, ocrResults.Text);
+            string ocrImagePath = Path.Combine(GetProjectDir(), @"../../input/OCR/couriernew_serif_bolditalic_monospace.bmp");
+            Image image = new Image(ocrImagePath);
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    PrintFontAttributes(ocrImagePath, ocrResults);
-                }
-                else
-                {
-                    Console.WriteLine("Accessing font attribute information is only supported for Windows platforms. Please read this sample's README.md for more information.");
-                }
+            TextBlockResult ocrResults = Process(image);
+
+            PrintResults(ocrImagePath, ocrResults.Text);
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                PrintFontAttributes(ocrImagePath, ocrResults);
+            }
+            else
+            {
+                Console.WriteLine("Accessing font attribute information is only supported for Windows platforms. Please read this sample's README.md for more information.");
             }
         }
+        public static string GetProjectDir()
+        {
+            var localDir = Assembly.GetExecutingAssembly().Location;
+            while (!localDir.EndsWith("SmartZoneOCRFontAttributes"))
+                localDir = Path.GetDirectoryName(localDir);
+            return localDir;
+        }
 
-        public static TextBlockResult Process(Bitmap bitmap)
+        public static TextBlockResult Process(Image image)
         {
             using (SmartZoneOCR instance = new SmartZoneOCR())
             {
@@ -48,9 +54,9 @@ namespace SmartZoneOCRSimpleRead
                 instance.Reader.CharacterSet.Language = Language.WesternEuropean;
 
                 // Optional. Zonal recognition support. Can be changed to recognize specific parts of the image.
-                instance.Reader.Area = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                instance.Reader.Zone = new Zone(0, 0, image.Width, image.Height);
 
-                TextBlockResult result = instance.Reader.AnalyzeField(bitmap);
+                TextBlockResult result = instance.Reader.AnalyzeField(image);
 
                 return result;
             }

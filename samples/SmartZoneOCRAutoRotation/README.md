@@ -33,8 +33,6 @@ Use Visual Studio Code `Run` and `Run and Debug` modes to work with the Sample.
 
 ### Note
 
-It would be better to have an Accusoft ImageGear license. Without that license, ImageGear will add a watermark into the image and may effect SmartZone OCR's results.
-
 When running in SmartZone evaluation mode, SmartZone will replace portions of recognition results with the text " [Accusoft Evaluation] " and asterisk "*" characters. This is an appropriate evaluation mode for applications that have no user interface.
 
 ## Important files
